@@ -1,12 +1,9 @@
 from tkinter import *
-import sys
-import os
-
-from pyanaconda.iutil import get_active_console
 from sympy import *
-from decimal import *
 
-class menuTrabalhoCG:
+#caso de teste 9-x*(x-10)
+
+class MenuMetodoDeNewton:
     def __init__(self, master):
         self.master = master
         master.title("Método de Newton")
@@ -17,8 +14,8 @@ class menuTrabalhoCG:
         self.label = Label(master, text="Insira os parâmetros:", font=("Fixedsys",16))
         self.label.grid(row=0, column=1)
 
-        #frame para os poligonos
-        self.poligonos = Frame(master)
+        #frame
+        self.frame = Frame(master)
 
         #botao que fecha o menu
         self.close_button = Button(master, text="Fechar", command=master.quit)
@@ -29,7 +26,9 @@ class menuTrabalhoCG:
         self.principal = Menu(master)
         self.master.config(menu=self.principal)
         self.principal.add_command(label="Ajuda", command=self.Ajuda)
+        self.principal.add_command(label="Sobre", command=self.Sobre)
 
+        #espaço para inserir a equação
         self.labelEquacao = Label(master, text="Insira a equação:", font=("Fixedsys", 12))
         self.labelEquacao.grid(row=1, column=1)
         self.equacaoInicial = StringVar()
@@ -59,9 +58,9 @@ class menuTrabalhoCG:
         self.labelResultado.grid(row=11, column=1)
 
         #executa o método de newton
-        self.botao_cubo = Button(master, text="Calcular", command=self.MétodoDeNewton)
-        self.botao_cubo.config(height=2, width=10)
-        self.botao_cubo.grid(row=13, column=2)
+        self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoDeNewton)
+        self.botaoExecutar.config(height=2, width=10)
+        self.botaoExecutar.grid(row=13, column=2)
 
         self.observacao = Label(master, text="A derivada é calcula em função de x", fg="red",font=("Fixedsys", 12))
         self.observacao.grid(row=0, column=2)
@@ -75,10 +74,19 @@ class menuTrabalhoCG:
                       '  - \'/\' : Divisão                                         \n' \
 
         self.pop_up = Toplevel()
-        self.label = Label(self.pop_up, text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
+        self.label = Label(self.pop_up,text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
         self.label.pack(expand=True)
 
-    def MétodoDeNewton(self):
+    def Sobre(self):
+        texto_sobre = '  Tem o objetivo de estimar as raízes de uma função.       \n' \
+                      'Para isso, escolhe-se uma aproximação inicial para esta.'
+
+        self.pop_upSobre = Toplevel()
+        self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=60, font=("Fixedsys", 12))
+        self.labelSobre.pack(expand=True)
+
+    def MetodoDeNewton(self):
+
         valorAnterior = eval(self.chuteInicial.get())
         proximoValor = valorAnterior - self.f(valorAnterior)/self.fDerivada(valorAnterior);
 
@@ -106,5 +114,5 @@ class menuTrabalhoCG:
         return eval(derivada)
 
 principal = Tk()
-menu = menuTrabalhoCG(principal)
+menu = MenuMetodoDeNewton(principal)
 principal.mainloop()
