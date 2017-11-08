@@ -34,12 +34,22 @@ class menuTrabalhoCG:
         self.executaBissecao.config(height=2, width=15)
         self.executaBissecao.grid(row=2, column=1)
 
+        # botao que seleciona o método do Ponto Fixo
+        self.executaPontoFixo = Button(master, text="Método do Ponto Fixo", command=self.MetodoPontoFixo)
+        self.executaPontoFixo.config(height=2, width=15)
+        self.executaPontoFixo.grid(row=3, column=1)
+
+        #botão que seleciona o método de Gauss-Seidel
+        self.executaGaussSeidel = Button(master, text="Método de Gauss-Seidel", command=self.MetodoGaussSeidel)
+        self.executaGaussSeidel.config(height=2, width=15)
+        self.executaGaussSeidel.grid(row=4,column=1)
+
     def Ajuda(self):
         texto_ajuda = 'Os métodos disponíveis são:                              \n' \
                       ' - Método de Newton                                       \n'\
                       ' - Método da Bisseção                                     \n'\
-                      '  - \'+\' : Adição                                         \n' \
-                      '  - \'-\' : Subtração                                      \n' \
+                      ' - Método do Ponto Fixo                                   \n' \
+                      ' - Método de Gauss-Seidel                                  \n' \
                       '  - \'/\' : Divisão                                         \n' \
 
         self.pop_up = Toplevel()
@@ -51,6 +61,12 @@ class menuTrabalhoCG:
 
     def MetodoBissecao(self):
         os.system('python3 MetodoBissecao.py')
+
+    def MetodoPontoFixo(self):
+        os.system('python3 MetodoPontoFixo.py')
+
+    def MetodoGaussSeidel(self):
+        os.system('python3 MetodoGauss-Seidel.py')
 
 principal = Tk()
 menu = menuTrabalhoCG(principal)
