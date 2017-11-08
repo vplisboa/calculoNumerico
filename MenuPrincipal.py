@@ -44,13 +44,18 @@ class menuTrabalhoCG:
         self.executaGaussSeidel.config(height=2, width=15)
         self.executaGaussSeidel.grid(row=4,column=1)
 
+        # botão que seleciona o método de Gauss-Jacobi
+        self.executaGaussJacobi = Button(master, text="Método de Gauss-Seidel", command=self.MetodoGaussJacobi)
+        self.executaGaussJacobi.config(height=2, width=15)
+        self.executaGaussJacobi.grid(row=5, column=1)
+
     def Ajuda(self):
         texto_ajuda = 'Os métodos disponíveis são:                              \n' \
                       ' - Método de Newton                                       \n'\
                       ' - Método da Bisseção                                     \n'\
                       ' - Método do Ponto Fixo                                   \n' \
                       ' - Método de Gauss-Seidel                                  \n' \
-                      '  - \'/\' : Divisão                                         \n' \
+                      ' - Método de Gauss-Jacobi                                   \n' \
 
         self.pop_up = Toplevel()
         self.label = Label(self.pop_up, text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
@@ -67,6 +72,9 @@ class menuTrabalhoCG:
 
     def MetodoGaussSeidel(self):
         os.system('python3 MetodoGauss-Seidel.py')
+
+    def MetodoGaussJacobi(self):
+        os.system('python3 MetodoGauss-Jacobi.py')
 
 principal = Tk()
 menu = menuTrabalhoCG(principal)
