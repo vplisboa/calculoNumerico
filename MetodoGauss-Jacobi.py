@@ -21,7 +21,7 @@ class MenuMetodoGaussJacobi:
 
         #botao que fecha o menu
         self.close_button = Button(master, text="Fechar", command=master.quit)
-        self.close_button.config(width = 2)
+        self.close_button.config(width = 5)
         self.close_button.grid(row=14, column=2)
 
         #cria menu no topo da janela, com a label Ajuda
@@ -67,6 +67,10 @@ class MenuMetodoGaussJacobi:
         self.labelResultado = Label(master, text="Resposta Final: ", font=("Fixedsys", 12))
         self.labelResultado.grid(row=11, column=1)
 
+        # Campo que mostra erros para o usuário
+        self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
+        self.labelErrosInput.grid(row=12, column=1)
+
     def Ajuda(self):
         texto_ajuda = 'Para inserir a equação utilize os seguintes operadores          \n'\
                       '  - \'*\' : Multiplicação                                       \n'\
@@ -90,19 +94,33 @@ class MenuMetodoGaussJacobi:
         self.labelSobre.pack(expand=True)
 
     def MetodoGaussJacobi(self):
+        if(self.matrizA.get() == '' or self.vetorSolucao.get() == ''
+           or self.chuteInicial.get() == '' or self.numeroInteracoes.get() == 0):
+            self.labelResultado.config(text='Resultado Final ')
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
 
-        matrizA = np.array(eval(self.matrizA.get()))
-        diagonal = np.diag(matrizA)
-        matrizR = matrizA - np.diagflat(diagonal)
+        else:
+            self.labelErrosInput.config(text="")
+            matrizA = np.array(eval(self.matrizA.get()))
+            diagonal = np.diag(matrizA)
+            try:
+                matrizR = matrizA - np.diagflat(diagonal)
 
-        vetorSolucao = eval(self.vetorSolucao.get())
-        chuteInicial = eval(self.chuteInicial.get())
-        numeroInteracoes = self.numeroInteracoes.get()
+            except ValueError:
+                self.labelResultado.config(text='Resultado Final ')
+                self.labelErrosInput.config(text="A Matriz A precisa ser quadrada")
 
-        for i in range(numeroInteracoes):
-            chuteInicial = (vetorSolucao - np.dot(matrizR, chuteInicial)) / diagonal
+            vetorSolucao = eval(self.vetorSolucao.get())
+            chuteInicial = eval(self.chuteInicial.get())
+            numeroInteracoes = self.numeroInteracoes.get()
 
-        self.labelResultado.config(text='Resultado Final '+ str(chuteInicial))
+            for i in range(numeroInteracoes):
+                try:
+                    chuteInicial = (vetorSolucao - np.dot(matrizR, chuteInicial)) / diagonal
+                except ValueError:
+                    self.labelResultado.config(text='Resultado Final ')
+                    self.labelErrosInput.config(text="Chute Inicial ou Vetor Solução estão com tamanho incorreto.")
+            self.labelResultado.config(text='Resultado Final '+ str(chuteInicial))
 
 principal = Tk()
 menu = MenuMetodoGaussJacobi(principal)

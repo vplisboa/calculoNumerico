@@ -9,7 +9,7 @@ class MenuMetodoDeNewton:
         master.title("Método de Newton")
 
         #altera o tamanho do menu
-        master.geometry("720x360")
+        master.geometry("800x360")
 
         self.label = Label(master, text="Insira os parâmetros:", font=("Fixedsys",16))
         self.label.grid(row=0, column=1)
@@ -46,7 +46,7 @@ class MenuMetodoDeNewton:
         self.campoChuteInicial.grid(row=4, column=1)
 
         #Insira o numero de casas decimais de erro
-        self.labelErro = Label(master, text="Insira o erro desejado", font=("Fixedsys", 12))
+        self.labelErro = Label(master, text="Insira o número de casas decimais do erro", font=("Fixedsys", 12))
         self.labelErro.grid(row=5, column=1)
         self.erroDesejado = IntVar()
         self.campoErroDesejado = Entry(master, textvar=self.erroDesejado)
@@ -59,6 +59,10 @@ class MenuMetodoDeNewton:
         #Campo que mostra o resultado final
         self.labelResultado = Label(master,text="Resposta Final: ",font=("Fixedsys", 12))
         self.labelResultado.grid(row=11, column=1)
+
+        # Campo que mostra erros para o usuário
+        self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
+        self.labelErrosInput.grid(row=12, column=1)
 
         #executa o método de newton
         self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoDeNewton)
@@ -101,20 +105,26 @@ class MenuMetodoDeNewton:
 
     def MetodoDeNewton(self):
 
-        valorAnterior = eval(self.chuteInicial.get())
-        proximoValor = valorAnterior - self.f(valorAnterior)/self.fDerivada(valorAnterior);
+        if(self.chuteInicial.get() == '' or self.erroDesejado.get() == 0
+           or self.equacaoInicial.get() == ''):
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
 
-        a= self.erroDesejado.get()
-        b = '%.'+ str(a) +'f'
-        passos = 1
+        else:
+            self.labelErrosInput.config(text="")
+            valorAnterior = eval(self.chuteInicial.get())
+            proximoValor = valorAnterior - self.f(valorAnterior)/self.fDerivada(valorAnterior);
 
-        while(b % proximoValor != b % valorAnterior):
-            valorAnterior = proximoValor
-            proximoValor = valorAnterior - self.f(valorAnterior) / self.fDerivada(valorAnterior);
-            passos += 1
+            a= self.erroDesejado.get()
+            b = '%.'+ str(a) +'f'
+            passos = 1
 
-        self.labelResultado.config(text = 'Resultado Final: '+str(proximoValor))
-        self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
+            while(b % proximoValor != b % valorAnterior):
+                valorAnterior = proximoValor
+                proximoValor = valorAnterior - self.f(valorAnterior) / self.fDerivada(valorAnterior);
+                passos += 1
+
+            self.labelResultado.config(text = 'Resultado Final: '+str(proximoValor))
+            self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
 
     def f(self,valor):
         x = valor

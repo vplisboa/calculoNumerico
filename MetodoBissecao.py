@@ -50,7 +50,7 @@ class MenuMetodoBissecao:
         self.campoFimIntervalo.grid(row=4, column=2)
 
         #Insira a tolerancia
-        self.labelTolerancia = Label(master, text="Insira a Tolerância", font=("Fixedsys", 12))
+        self.labelTolerancia = Label(master, text="Insira a Tolerância(exemplo:0.001)", font=("Fixedsys", 12))
         self.labelTolerancia.grid(row=5, column=1)
         self.tolerancia = StringVar()
         self.campoTolerancia = Entry(master, textvar=self.tolerancia)
@@ -63,6 +63,10 @@ class MenuMetodoBissecao:
         #Campo que mostra o resultado final
         self.labelResultado = Label(master,text="Resposta Final: ",font=("Fixedsys", 12))
         self.labelResultado.grid(row=11, column=1)
+
+        #Campo que mostra erros para o usuário
+        self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
+        self.labelErrosInput.grid(row=12, column=1)
 
         #executa o método da bisseção
         self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoBissecao)
@@ -94,35 +98,42 @@ class MenuMetodoBissecao:
 
     def MetodoBissecao(self):
 
-        inicioIntervalo = Decimal(self.inicioIntervalo.get())
-        fimIntervalo = Decimal(self.fimIntervalo.get())
-        tolerancia= Decimal(self.tolerancia.get())
-        passos = 0
-        dois = Decimal('2.0')
-        pontoMedio = 0
-
-        if self.f(inicioIntervalo) * self.f(fimIntervalo) > 0:
-            resultado = 'Não tem raíz'
+        if(self.inicioIntervalo.get() == '' or self.fimIntervalo.get() == ''
+           or self.tolerancia.get() == '' or self.equacaoInicial.get() == ''):
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
 
         else:
-            while (fimIntervalo - inicioIntervalo) / dois > tolerancia:
+            self.labelErrosInput.config(text="")
 
-                pontoMedio = (inicioIntervalo + fimIntervalo) / dois
-                passos += 1
+            inicioIntervalo = Decimal(self.inicioIntervalo.get())
+            fimIntervalo = Decimal(self.fimIntervalo.get())
+            tolerancia= Decimal(self.tolerancia.get())
+            passos = 0
+            dois = Decimal('2.0')
+            pontoMedio = 0
 
-                if self.f(pontoMedio) == 0:
-                    break
+            if self.f(inicioIntervalo) * self.f(fimIntervalo) > 0:
+                resultado = 'Não tem raíz'
 
-                elif self.f(inicioIntervalo) * self.f(pontoMedio) < 0:
-                    fimIntervalo = pontoMedio
+            else:
+                while (fimIntervalo - inicioIntervalo) / dois > tolerancia:
 
-                else:
-                    inicioIntervalo = pontoMedio
+                    pontoMedio = (inicioIntervalo + fimIntervalo) / dois
+                    passos += 1
 
-            resultado = str(pontoMedio)
+                    if self.f(pontoMedio) == 0:
+                        break
 
-        self.labelResultado.config(text = 'Resultado Final: '+resultado)
-        self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
+                    elif self.f(inicioIntervalo) * self.f(pontoMedio) < 0:
+                        fimIntervalo = pontoMedio
+
+                    else:
+                        inicioIntervalo = pontoMedio
+
+                resultado = str(pontoMedio)
+
+            self.labelResultado.config(text = 'Resultado Final: '+resultado)
+            self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
 
     def f(self,valor):
         x = valor

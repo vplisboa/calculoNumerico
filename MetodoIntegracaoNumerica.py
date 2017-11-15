@@ -62,6 +62,10 @@ class MetodoIntegracaoNumerica:
         self.labelResultado = Label(master,text="Resposta Final: ",font=("Fixedsys", 12))
         self.labelResultado.grid(row=11, column=1)
 
+        # Campo que mostra erros para o usuário
+        self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
+        self.labelErrosInput.grid(row=12, column=1)
+
         #executa o método da Integração Numérica
         self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoIntegracaoNumerica)
         self.botaoExecutar.config(height=2, width=10)
@@ -80,8 +84,11 @@ class MetodoIntegracaoNumerica:
         self.label.pack(expand=True)
 
     def Sobre(self):
-        texto_sobre = '  Tem o objetivo de estimar as raízes de uma função.       \n' \
-                      'Para isso, escolhe-se uma aproximação inicial para esta.'
+        texto_sobre = ' A idéia básica desse método de integração numérica \n' \
+                      'é a substituição da função f(x) por um polinômio que \n' \
+                      'a aproxime razoavelmente no intervalo [a,b]. Assim o \n' \
+                      'problema fica resolvido pela integração de polinômios,\n' \
+                      'o que é trivial de se fazer.'
 
         self.pop_upSobre = Toplevel()
         self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=60, font=("Fixedsys", 12))
@@ -89,18 +96,25 @@ class MetodoIntegracaoNumerica:
 
     def MetodoIntegracaoNumerica(self):
 
-        inicioIntervalo = Decimal(self.inicioIntervalo.get())
-        fimIntervalo = Decimal(str(eval(self.fimIntervalo.get())))
-        tolerancia = Decimal(self.tolerancia.get())
+        if(self.inicioIntervalo.get() == '' or self.fimIntervalo.get() == ''
+           or self.tolerancia.get() == '' or self.equacaoInicial.get()):
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
 
-        x = np.linspace(float(inicioIntervalo + (fimIntervalo - inicioIntervalo) / (2 * tolerancia)), float(fimIntervalo - (fimIntervalo - inicioIntervalo) / (2 * tolerancia)), int(tolerancia))
-        area = Decimal('0.0')
+        else:
+            self.labelErrosInput.config(text="")
+            
+            inicioIntervalo = Decimal(self.inicioIntervalo.get())
+            fimIntervalo = Decimal(str(eval(self.fimIntervalo.get())))
+            tolerancia = Decimal(self.tolerancia.get())
 
-        for valor in x:
-            fx = self.f(valor)
-            area += Decimal(str(fx)) * (fimIntervalo - inicioIntervalo) / tolerancia
+            x = np.linspace(float(inicioIntervalo + (fimIntervalo - inicioIntervalo) / (2 * tolerancia)), float(fimIntervalo - (fimIntervalo - inicioIntervalo) / (2 * tolerancia)), int(tolerancia))
+            area = Decimal('0.0')
 
-        self.labelResultado.config(text = 'Resultado Final: '+str(area))
+            for valor in x:
+                fx = self.f(valor)
+                area += Decimal(str(fx)) * (fimIntervalo - inicioIntervalo) / tolerancia
+
+            self.labelResultado.config(text = 'Resultado Final: '+str(area))
 
     def f(self,valor):
         x = valor

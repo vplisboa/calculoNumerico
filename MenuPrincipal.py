@@ -45,14 +45,14 @@ class menuTrabalhoCG:
         self.executaGaussSeidel.grid(row=4,column=1)
 
         # botão que seleciona o método de Gauss-Jacobi
-        self.executaGaussJacobi = Button(master, text="Método de Gauss-Seidel", command=self.MetodoGaussJacobi)
+        self.executaGaussJacobi = Button(master, text="Método de Gauss-Jacobi", command=self.MetodoGaussJacobi)
         self.executaGaussJacobi.config(height=3, width=27)
         self.executaGaussJacobi.grid(row=5, column=1)
 
         # botão que seleciona o método da Integração Numérica
         self.executaIntegracaoNumerica = Button(master, text="Método da Integração Numérica", command=self.MetodoIntegracaoNumerica)
         self.executaIntegracaoNumerica.config(height=3, width=27)
-        self.executaIntegracaoNumerica.grid(row=5, column=1)
+        self.executaIntegracaoNumerica.grid(row=6, column=1)
 
     def Ajuda(self):
         texto_ajuda = 'Os métodos disponíveis são:                              \n' \

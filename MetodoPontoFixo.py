@@ -18,7 +18,7 @@ class MenuMetodoPontoFixo:
 
         #botao que fecha o menu
         self.close_button = Button(master, text="Fechar", command=master.quit)
-        self.close_button.config(width = 2)
+        self.close_button.config(width = 5)
         self.close_button.grid(row=14, column=2)
 
         #cria menu no topo da janela, com a label Ajuda
@@ -67,6 +67,10 @@ class MenuMetodoPontoFixo:
 #        self.labelErroFinal = Label(master,text="Erro Final: ",font=("Fixedsys", 12))
  #       self.labelErroFinal.grid(row=12,column=1)
 
+        # Campo que mostra erros para o usuário
+        self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
+        self.labelErrosInput.grid(row=12, column=1)
+
         #executa o método da bisseção
         self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoPontoFixo)
         self.botaoExecutar.config(height=2, width=10)
@@ -94,24 +98,31 @@ class MenuMetodoPontoFixo:
         self.labelSobre.pack(expand=True)
 
     def MetodoPontoFixo(self):
-        valorInicial = eval(self.valorInicial.get())
 
-        #tolerancia = eval(self.tolerancia.get())
-        passos = 0
-        quantidadeMaximaPassos = self.quantidadePassos.get()
-        #erro = 1
-        resultado = 0.0
+        if(self.valorInicial.get() == '' or self.quantidadePassos.get() == 0
+           or self.equacaoInicial.get() == ''):
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
 
-        while (passos < quantidadeMaximaPassos):
-            resultado = self.f(valorInicial)
-            #erro = norm(valorInicial - resultado)
-            print(resultado)
-            valorInicial = resultado
-            passos += 1
+        else:
+            self.labelErrosInput.config(text="")
+            valorInicial = eval(self.valorInicial.get())
 
-        self.labelResultado.config(text = 'Resultado Final: '+str(resultado))
-        self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
-        #self.labelErroFinal.config(text='Erro Final: '+str(erro))
+            #tolerancia = eval(self.tolerancia.get())
+            passos = 0
+            quantidadeMaximaPassos = self.quantidadePassos.get()
+            #erro = 1
+            resultado = 0.0
+
+            while (passos < quantidadeMaximaPassos):
+                resultado = self.f(valorInicial)
+                #erro = norm(valorInicial - resultado)
+                print(resultado)
+                valorInicial = resultado
+                passos += 1
+
+            self.labelResultado.config(text = 'Resultado Final: '+str(resultado))
+            self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
+            #self.labelErroFinal.config(text='Erro Final: '+str(erro))
 
     def f(self,valor):
         x = valor
