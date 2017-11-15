@@ -97,7 +97,7 @@ class MetodoIntegracaoNumerica:
     def MetodoIntegracaoNumerica(self):
 
         if(self.inicioIntervalo.get() == '' or self.fimIntervalo.get() == ''
-           or self.tolerancia.get() == '' or self.equacaoInicial.get()):
+           or self.tolerancia.get() == '' or self.equacaoInicial.get() == ''):
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
 
         else:

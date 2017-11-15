@@ -67,22 +67,22 @@ class menuTrabalhoCG:
         self.label.pack(expand=True)
 
     def MetodoDeNewton(self):
-        os.system('python3 MetodoDeNewton.py')
+        os.system('python3 Metodos/MetodoDeNewton.py')
 
     def MetodoBissecao(self):
-        os.system('python3 MetodoBissecao.py')
+        os.system('python3 Metodos/MetodoBissecao.py')
 
     def MetodoPontoFixo(self):
-        os.system('python3 MetodoPontoFixo.py')
+        os.system('python3 Metodos/MetodoPontoFixo.py')
 
     def MetodoGaussSeidel(self):
-        os.system('python3 MetodoGauss-Seidel.py')
+        os.system('python3 Metodos/MetodoGauss-Seidel.py')
 
     def MetodoGaussJacobi(self):
-        os.system('python3 MetodoGauss-Jacobi.py')
+        os.system('python3 Metodos/MetodoGauss-Jacobi.py')
 
     def MetodoIntegracaoNumerica(self):
-        os.system('python3 MetodoIntegracaoNumerica.py')
+        os.system('python3 Metodos/MetodoIntegracaoNumerica.py')
 
 principal = Tk()
 menu = menuTrabalhoCG(principal)
