@@ -19,7 +19,7 @@ class MenuMetodoDeNewton:
 
         #botao que fecha o menu
         self.close_button = Button(master, text="Fechar", command=master.quit)
-        self.close_button.config(width = 2)
+        self.close_button.config(width = 6)
         self.close_button.grid(row=14, column=2)
 
         #cria menu no topo da janela, com a label Ajuda
@@ -27,6 +27,9 @@ class MenuMetodoDeNewton:
         self.master.config(menu=self.principal)
         self.principal.add_command(label="Ajuda", command=self.Ajuda)
         self.principal.add_command(label="Sobre", command=self.Sobre)
+
+        #Cria menu no topo da janela com a label Exemplo Interessante
+        self.principal.add_command(label="Exemplo", command=self.ExemploInteressante)
 
         #espaço para inserir a equação
         self.labelEquacao = Label(master, text="Insira a equação:", font=("Fixedsys", 12))
@@ -84,6 +87,17 @@ class MenuMetodoDeNewton:
         self.pop_upSobre = Toplevel()
         self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=60, font=("Fixedsys", 12))
         self.labelSobre.pack(expand=True)
+
+    def ExemploInteressante(self):
+        textoExemplo = 'Um exemplo interessante é a função 9-x*(x-10) com valor inicial 10. \n' \
+                       'O interessante desse exemplo é que utilizando erro 4 e erro 8, o    \n' \
+                       '   valor obtido é o mesmo, porém em passos diferentes isso ocorre   \n' \
+                       '   devido à incerteza que existe em se trabalhar com variáveis do   \n' \
+                       '   tipo float.'
+
+        self.pop_upExemplo = Toplevel()
+        self.labelExemplo = Label(self.pop_upExemplo, text=textoExemplo, height=12, width=74, font=("Fixedsys", 12))
+        self.labelExemplo.pack(expand=True)
 
     def MetodoDeNewton(self):
 

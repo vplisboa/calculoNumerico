@@ -16,7 +16,7 @@ class menuTrabalhoCG:
 
         #botao que fecha o menu
         self.close_button = Button(master, text="Fechar", command=master.quit)
-        self.close_button.config(width = 5)
+        self.close_button.config(height=2,width = 8)
         self.close_button.grid(row=5, column=3)
 
         #cria menu no topo da janela, com a label Ajuda
@@ -26,28 +26,33 @@ class menuTrabalhoCG:
 
         #botao que seleciona o método de newton
         self.executaMetodoDeNewton = Button(master, text="Método de Newton", command=self.MetodoDeNewton)
-        self.executaMetodoDeNewton.config(height=2, width=15)
+        self.executaMetodoDeNewton.config(height=3, width=27)
         self.executaMetodoDeNewton.grid(row=1, column=1)
 
         # botao que seleciona o método da bisseção
         self.executaBissecao = Button(master, text="Método da Bisseção", command=self.MetodoBissecao)
-        self.executaBissecao.config(height=2, width=15)
+        self.executaBissecao.config(height=3, width=27)
         self.executaBissecao.grid(row=2, column=1)
 
         # botao que seleciona o método do Ponto Fixo
         self.executaPontoFixo = Button(master, text="Método do Ponto Fixo", command=self.MetodoPontoFixo)
-        self.executaPontoFixo.config(height=2, width=15)
+        self.executaPontoFixo.config(height=3, width=27)
         self.executaPontoFixo.grid(row=3, column=1)
 
         #botão que seleciona o método de Gauss-Seidel
         self.executaGaussSeidel = Button(master, text="Método de Gauss-Seidel", command=self.MetodoGaussSeidel)
-        self.executaGaussSeidel.config(height=2, width=15)
+        self.executaGaussSeidel.config(height=3, width=27)
         self.executaGaussSeidel.grid(row=4,column=1)
 
         # botão que seleciona o método de Gauss-Jacobi
         self.executaGaussJacobi = Button(master, text="Método de Gauss-Seidel", command=self.MetodoGaussJacobi)
-        self.executaGaussJacobi.config(height=2, width=15)
+        self.executaGaussJacobi.config(height=3, width=27)
         self.executaGaussJacobi.grid(row=5, column=1)
+
+        # botão que seleciona o método da Integração Numérica
+        self.executaIntegracaoNumerica = Button(master, text="Método da Integração Numérica", command=self.MetodoIntegracaoNumerica)
+        self.executaIntegracaoNumerica.config(height=3, width=27)
+        self.executaIntegracaoNumerica.grid(row=5, column=1)
 
     def Ajuda(self):
         texto_ajuda = 'Os métodos disponíveis são:                              \n' \
@@ -75,6 +80,9 @@ class menuTrabalhoCG:
 
     def MetodoGaussJacobi(self):
         os.system('python3 MetodoGauss-Jacobi.py')
+
+    def MetodoIntegracaoNumerica(self):
+        os.system('python3 MetodoIntegracaoNumerica.py')
 
 principal = Tk()
 menu = menuTrabalhoCG(principal)

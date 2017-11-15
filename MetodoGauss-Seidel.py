@@ -5,7 +5,7 @@ import numpy as np
 # chute inical: [1,1,1]
 # solução: [1.0,2.0,3.0]
 
-class MenuMetodoDeNewton:
+class MenuMetodoGaussSeidel:
     def __init__(self, master):
         self.master = master
         master.title("Método de Gauss-Seidel")
@@ -107,5 +107,5 @@ class MenuMetodoDeNewton:
         self.labelResultado.config(text='Resultado Final '+ str(chuteInicial))
 
 principal = Tk()
-menu = MenuMetodoDeNewton(principal)
+menu = MenuMetodoGaussSeidel(principal)
 principal.mainloop()

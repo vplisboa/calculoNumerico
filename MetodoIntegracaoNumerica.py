@@ -1,12 +1,14 @@
 from tkinter import *
-from decimal import *
+from sympy import *
+import numpy as np
+from decimal import Decimal
 
-#caso de teste x**2 - 7, -1:3 , 0.0001
+#caso de teste sin(x) , 0,np.pi/2, 100
 
-class MenuMetodoBissecao:
+class MetodoIntegracaoNumerica:
     def __init__(self, master):
         self.master = master
-        master.title("Método da Bisseção")
+        master.title("Método da Integração Numérica")
 
         #altera o tamanho do menu
         master.geometry("720x360")
@@ -19,7 +21,7 @@ class MenuMetodoBissecao:
 
         #botao que fecha o menu
         self.close_button = Button(master, text="Fechar", command=master.quit)
-        self.close_button.config(width = 5)
+        self.close_button.config(width = 6)
         self.close_button.grid(row=14, column=2)
 
         #cria menu no topo da janela, com a label Ajuda
@@ -35,11 +37,11 @@ class MenuMetodoBissecao:
         self.campoEquacaoInicial = Entry(master, textvar=self.equacaoInicial)
         self.campoEquacaoInicial.grid(row=2, column=1)
 
-        #Inicio Intervalo
+        # Inicio Intervalo
         self.labelInicioIntervalo = Label(master, text="Insira o Início do intervalo", font=("Fixedsys", 12))
         self.labelInicioIntervalo.grid(row=3, column=1)
         self.inicioIntervalo = StringVar()
-        self.campoInicioIntervalo = Entry(master, textvar = self.inicioIntervalo)
+        self.campoInicioIntervalo = Entry(master, textvar=self.inicioIntervalo)
         self.campoInicioIntervalo.grid(row=4, column=1)
 
         # Fim Intervalo
@@ -49,23 +51,19 @@ class MenuMetodoBissecao:
         self.campoFimIntervalo = Entry(master, textvar=self.fimIntervalo)
         self.campoFimIntervalo.grid(row=4, column=2)
 
-        #Insira a tolerancia
-        self.labelTolerancia = Label(master, text="Insira a Tolerância", font=("Fixedsys", 12))
+        # Quantidade de pontos
+        self.labelTolerancia = Label(master, text="Insira a quantidade de pontos", font=("Fixedsys", 12))
         self.labelTolerancia.grid(row=5, column=1)
         self.tolerancia = StringVar()
         self.campoTolerancia = Entry(master, textvar=self.tolerancia)
         self.campoTolerancia.grid(row=6, column=1)
 
-        #Campo que mostra os passos até a resposta ser encontrada
-        self.labelPassos = Label(master,text="Quantidade de Passos: ",font=("Fixedsys", 12))
-        self.labelPassos.grid(row=10, column=1)
-
         #Campo que mostra o resultado final
         self.labelResultado = Label(master,text="Resposta Final: ",font=("Fixedsys", 12))
         self.labelResultado.grid(row=11, column=1)
 
-        #executa o método da bisseção
-        self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoBissecao)
+        #executa o método da Integração Numérica
+        self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoIntegracaoNumerica)
         self.botaoExecutar.config(height=2, width=10)
         self.botaoExecutar.grid(row=13, column=2)
 
@@ -78,51 +76,31 @@ class MenuMetodoBissecao:
                       '  - \'/\' : Divisão                                         \n' \
 
         self.pop_up = Toplevel()
-        self.label = Label(self.pop_up, text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
+        self.label = Label(self.pop_up,text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
         self.label.pack(expand=True)
 
     def Sobre(self):
-        texto_sobre = ' É um método de busca de raízes que bissecta repetidamente um   \n' \
-                      'intervalo e então seleciona um subintervalo contendo a raiz    \n' \
-                      'para processamento adicional. Trata-se de um método simples e   \n' \
-                      'robusto, relativamente lento quando comparado a métodos como o  \n' \
-                      'método de Newton ou o método das secantes.'
+        texto_sobre = '  Tem o objetivo de estimar as raízes de uma função.       \n' \
+                      'Para isso, escolhe-se uma aproximação inicial para esta.'
 
         self.pop_upSobre = Toplevel()
-        self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=70, font=("Fixedsys", 12))
+        self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=60, font=("Fixedsys", 12))
         self.labelSobre.pack(expand=True)
 
-    def MetodoBissecao(self):
+    def MetodoIntegracaoNumerica(self):
 
         inicioIntervalo = Decimal(self.inicioIntervalo.get())
-        fimIntervalo = Decimal(self.fimIntervalo.get())
-        tolerancia= Decimal(self.tolerancia.get())
-        passos = 0
-        dois = Decimal('2.0')
-        pontoMedio = 0
+        fimIntervalo = Decimal(str(eval(self.fimIntervalo.get())))
+        tolerancia = Decimal(self.tolerancia.get())
 
-        if self.f(inicioIntervalo) * self.f(fimIntervalo) > 0:
-            resultado = 'Não tem raíz'
+        x = np.linspace(float(inicioIntervalo + (fimIntervalo - inicioIntervalo) / (2 * tolerancia)), float(fimIntervalo - (fimIntervalo - inicioIntervalo) / (2 * tolerancia)), int(tolerancia))
+        area = Decimal('0.0')
 
-        else:
-            while (fimIntervalo - inicioIntervalo) / dois > tolerancia:
+        for valor in x:
+            fx = self.f(valor)
+            area += Decimal(str(fx)) * (fimIntervalo - inicioIntervalo) / tolerancia
 
-                pontoMedio = (inicioIntervalo + fimIntervalo) / dois
-                passos += 1
-
-                if self.f(pontoMedio) == 0:
-                    break
-
-                elif self.f(inicioIntervalo) * self.f(pontoMedio) < 0:
-                    fimIntervalo = pontoMedio
-
-                else:
-                    inicioIntervalo = pontoMedio
-
-            resultado = str(pontoMedio)
-
-        self.labelResultado.config(text = 'Resultado Final: '+resultado)
-        self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
+        self.labelResultado.config(text = 'Resultado Final: '+str(area))
 
     def f(self,valor):
         x = valor
@@ -130,5 +108,5 @@ class MenuMetodoBissecao:
         return eval(equacao)
 
 principal = Tk()
-menu = MenuMetodoBissecao(principal)
+menu = MetodoIntegracaoNumerica(principal)
 principal.mainloop()

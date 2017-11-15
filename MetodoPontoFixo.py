@@ -2,10 +2,10 @@ from tkinter import *
 
 #caso de teste
 
-class MenuMetodoBissecao:
+class MenuMetodoPontoFixo:
     def __init__(self, master):
         self.master = master
-        master.title("Método da Bisseção")
+        master.title("Método do Ponto Fixo")
 
         #altera o tamanho do menu
         master.geometry("720x360")
@@ -68,7 +68,7 @@ class MenuMetodoBissecao:
  #       self.labelErroFinal.grid(row=12,column=1)
 
         #executa o método da bisseção
-        self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoBissecao)
+        self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoPontoFixo)
         self.botaoExecutar.config(height=2, width=10)
         self.botaoExecutar.grid(row=13, column=2)
 
@@ -85,17 +85,15 @@ class MenuMetodoBissecao:
         self.label.pack(expand=True)
 
     def Sobre(self):
-        texto_sobre = ' É um método de busca de raízes que bissecta repetidamente um   \n' \
-                      'intervalo e então seleciona um subintervalo contendo a raiz    \n' \
-                      'para processamento adicional. Trata-se de um método simples e   \n' \
-                      'robusto, relativamente lento quando comparado a métodos como o  \n' \
-                      'método de Newton ou o método das secantes.'
+        texto_sobre = '  É um método de se calcular pontos fixos de funções.       \n' \
+                      '  Dada uma aproximação de x0, o método consiste em iterar    \n' \
+                      'sucessivamente a função dada sobre o x0.'
 
         self.pop_upSobre = Toplevel()
         self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=70, font=("Fixedsys", 12))
         self.labelSobre.pack(expand=True)
 
-    def MetodoBissecao(self):
+    def MetodoPontoFixo(self):
         valorInicial = eval(self.valorInicial.get())
 
         #tolerancia = eval(self.tolerancia.get())
@@ -121,5 +119,5 @@ class MenuMetodoBissecao:
         return eval(equacao)
 
 principal = Tk()
-menu = MenuMetodoBissecao(principal)
+menu = MenuMetodoPontoFixo(principal)
 principal.mainloop()
