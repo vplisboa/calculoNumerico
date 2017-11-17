@@ -108,6 +108,8 @@ class MenuMetodoDeNewton:
         if(self.chuteInicial.get() == '' or self.erroDesejado.get() == 0
            or self.equacaoInicial.get() == ''):
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelResultado.config(text='Resultado Final: ')
+            self.labelPassos.config(text='Quantidade de Passos: ')
 
         else:
             self.labelErrosInput.config(text="")

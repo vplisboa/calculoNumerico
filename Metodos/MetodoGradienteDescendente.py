@@ -1,12 +1,12 @@
 from tkinter import *
 from decimal import *
+from sympy import *
+#caso de teste x**4 − 3*x**3 + 2 ; gama = 0.01 ; precisao = 0.00001 ; v0 = 6
 
-#caso de teste x**2 - 7, -1:3 , 0.0001
-
-class MenuMetodoBissecao:
+class MenuMetodoGradienteDescendente:
     def __init__(self, master):
         self.master = master
-        master.title("Método da Bisseção")
+        master.title("Método do Gradiente Descendente")
 
         #altera o tamanho do menu
         master.geometry("720x360")
@@ -35,26 +35,26 @@ class MenuMetodoBissecao:
         self.campoEquacaoInicial = Entry(master, textvar=self.equacaoInicial)
         self.campoEquacaoInicial.grid(row=2, column=1)
 
-        #Inicio Intervalo
-        self.labelInicioIntervalo = Label(master, text="Insira o Início do intervalo", font=("Fixedsys", 12))
-        self.labelInicioIntervalo.grid(row=3, column=1)
-        self.inicioIntervalo = StringVar()
-        self.campoInicioIntervalo = Entry(master, textvar = self.inicioIntervalo)
-        self.campoInicioIntervalo.grid(row=4, column=1)
+        #Valor Inicial
+        self.labelValorInicial = Label(master, text="Insira o Valor Inicial", font=("Fixedsys", 12))
+        self.labelValorInicial.grid(row=3, column=1)
+        self.valorInicial = StringVar()
+        self.campoValorInicial = Entry(master, textvar = self.valorInicial)
+        self.campoValorInicial.grid(row=4, column=1)
 
-        # Fim Intervalo
-        self.labelFimIntervalo = Label(master, text="Insira o Fim do intervalo", font=("Fixedsys", 12))
-        self.labelFimIntervalo.grid(row=3, column=2)
-        self.fimIntervalo = StringVar()
-        self.campoFimIntervalo = Entry(master, textvar=self.fimIntervalo)
-        self.campoFimIntervalo.grid(row=4, column=2)
+        # Multiplicador dos passos
+        self.labelMultiplicadorPassos = Label(master, text="Insira o mutilplicador para os passos(Gama)", font=("Fixedsys", 12))
+        self.labelMultiplicadorPassos.grid(row=3, column=2)
+        self.multiplicadorPassos = StringVar()
+        self.campoMultiplicadorPassos = Entry(master, textvar=self.multiplicadorPassos)
+        self.campoMultiplicadorPassos.grid(row=4, column=2)
 
-        #Insira a tolerancia
-        self.labelTolerancia = Label(master, text="Insira a Tolerância(exemplo:0.001)", font=("Fixedsys", 12))
-        self.labelTolerancia.grid(row=5, column=1)
-        self.tolerancia = StringVar()
-        self.campoTolerancia = Entry(master, textvar=self.tolerancia)
-        self.campoTolerancia.grid(row=6, column=1)
+        #Insira a precisão
+        self.labelPrecisao = Label(master, text="Insira a Precisão(exemplo:0.001)", font=("Fixedsys", 12))
+        self.labelPrecisao.grid(row=5, column=1)
+        self.precisao = StringVar()
+        self.campoPrecisao = Entry(master, textvar=self.precisao)
+        self.campoPrecisao.grid(row=6, column=1)
 
         #Campo que mostra os passos até a resposta ser encontrada
         self.labelPassos = Label(master,text="Quantidade de Passos: ",font=("Fixedsys", 12))
@@ -98,8 +98,8 @@ class MenuMetodoBissecao:
 
     def MetodoBissecao(self):
 
-        if(self.inicioIntervalo.get() == '' or self.fimIntervalo.get() == ''
-           or self.tolerancia.get() == '' or self.equacaoInicial.get() == ''):
+        if(self.valorInicial.get() == '' or self.multiplicadorPassos.get() == ''
+           or self.precisao.get() == '' or self.equacaoInicial.get() == ''):
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
             self.labelResultado.config(text='Resultado Final: ')
             self.labelPassos.config(text='Quantidade de Passos: ')
@@ -107,41 +107,28 @@ class MenuMetodoBissecao:
         else:
             self.labelErrosInput.config(text="")
 
-            inicioIntervalo = Decimal(self.inicioIntervalo.get())
-            fimIntervalo = Decimal(self.fimIntervalo.get())
-            tolerancia= Decimal(self.tolerancia.get())
+            valorInicial = Decimal(self.valorInicial.get())
+            multiplicadorPassos = Decimal(self.multiplicadorPassos.get())
+            passoAnterior = valorInicial
+            precisao = Decimal(self.precisao.get())
             passos = 0
-            dois = Decimal('2.0')
-            pontoMedio = 0
 
-            if self.f(inicioIntervalo) * self.f(fimIntervalo) > 0:
-                resultado = 'Não tem raíz'
+            while passoAnterior > precisao:
 
-            else:
-                while (fimIntervalo - inicioIntervalo) / dois > tolerancia:
+                valorAnterior = valorInicial
+                valorInicial += Decimal('-1') * multiplicadorPassos * Decimal(str(self.fDerivada(float(valorAnterior))))
+                passoAnterior = abs(valorInicial - valorAnterior)
+                passos += 1
 
-                    pontoMedio = (inicioIntervalo + fimIntervalo) / dois
-                    passos += 1
-
-                    if self.f(pontoMedio) == 0:
-                        break
-
-                    elif self.f(inicioIntervalo) * self.f(pontoMedio) < 0:
-                        fimIntervalo = pontoMedio
-
-                    else:
-                        inicioIntervalo = pontoMedio
-
-                resultado = str(pontoMedio)
-
-            self.labelResultado.config(text = 'Resultado Final: '+resultado)
+            self.labelResultado.config(text = 'Resultado Final: '+str(valorInicial))
             self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
 
-    def f(self,valor):
-        x = valor
+    def fDerivada(self,valor):
         equacao = eval('\'' + self.equacaoInicial.get() + '\'')
-        return eval(equacao)
+        x = valor
+        derivada = str(diff(equacao, 'x'))
+        return eval(derivada)
 
 principal = Tk()
-menu = MenuMetodoBissecao(principal)
+menu = MenuMetodoGradienteDescendente(principal)
 principal.mainloop()

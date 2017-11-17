@@ -99,6 +99,7 @@ class MetodoIntegracaoNumerica:
         if(self.inicioIntervalo.get() == '' or self.fimIntervalo.get() == ''
            or self.tolerancia.get() == '' or self.equacaoInicial.get() == ''):
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelResultado.config(text='Resultado Final: ')
 
         else:
             self.labelErrosInput.config(text="")

@@ -54,6 +54,12 @@ class menuTrabalhoCG:
         self.executaIntegracaoNumerica.config(height=3, width=27)
         self.executaIntegracaoNumerica.grid(row=6, column=1)
 
+        # botão que seleciona o método da Integração Numérica
+        self.executaGradienteDescendente = Button(master, text="Método do Gradiente Descendente",
+                                                command=self.MetodoGradienteDescendente)
+        self.executaGradienteDescendente.config(height=3, width=27)
+        self.executaGradienteDescendente.grid(row=7, column=1)
+
     def Ajuda(self):
         texto_ajuda = 'Os métodos disponíveis são:                              \n' \
                       ' - Método de Newton                                       \n'\
@@ -84,6 +90,8 @@ class menuTrabalhoCG:
     def MetodoIntegracaoNumerica(self):
         os.system('python3 Metodos/MetodoIntegracaoNumerica.py')
 
+    def MetodoGradienteDescendente(self):
+        os.system('python3 Metodos/MetodoGradienteDescendente.py')
 principal = Tk()
 menu = menuTrabalhoCG(principal)
 principal.mainloop()

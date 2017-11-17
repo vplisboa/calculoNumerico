@@ -102,6 +102,8 @@ class MenuMetodoPontoFixo:
         if(self.valorInicial.get() == '' or self.quantidadePassos.get() == 0
            or self.equacaoInicial.get() == ''):
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelResultado.config(text='Resultado Final: ')
+            self.labelPassos.config(text='Quantidade de Passos: ')
 
         else:
             self.labelErrosInput.config(text="")
