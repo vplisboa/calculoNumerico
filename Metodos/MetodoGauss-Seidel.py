@@ -1,5 +1,6 @@
 from tkinter import *
 import numpy as np
+from time import *
 
 #caso de teste A = [[4.0, -2.0, 1.0], [1.0, -3.0, 2.0], [-1.0, 2.0, 6.0]]
 # chute inical: [1,1,1]
@@ -29,6 +30,9 @@ class MenuMetodoGaussSeidel:
         self.master.config(menu=self.principal)
         self.principal.add_command(label="Ajuda", command=self.Ajuda)
         self.principal.add_command(label="Sobre", command=self.Sobre)
+
+        # Cria menu no topo da janela com a label Exemplo Interessante
+        self.principal.add_command(label="Exemplo", command=self.ExemploInteressante)
 
         #espaço para inserir a Matriz A
         self.labelMatrizA = Label(master, text="Insira a Matriz A:", font=("Fixedsys", 12))
@@ -65,12 +69,15 @@ class MenuMetodoGaussSeidel:
 
         # Campo que mostra erros para o usuário
         self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
-        self.labelErrosInput.grid(row=12, column=1)
+        self.labelErrosInput.grid(row=13, column=1)
 
         #Campo que mostra o resultado Final
         self.labelResultado = Label(master, text="Resposta Final: ", font=("Fixedsys", 12))
         self.labelResultado.grid(row=11, column=1)
 
+        # Campo que mostra o tempo de execução do programa
+        self.labelTempoExecucao = Label(master, text="Tempo de Execução: ", font=("Fixedsys", 12))
+        self.labelTempoExecucao.grid(row=12, column=1)
 
     def Ajuda(self):
         texto_ajuda = 'Para inserir a equação utilize os seguintes operadores          \n'\
@@ -90,19 +97,30 @@ class MenuMetodoGaussSeidel:
     def Sobre(self):
         texto_sobre = '   É um método iterativo para resolução de sistemas de equações lineares. \n' \
                       'Fica garantida a convergência da sucessão de valores gerados para a   \n' \
-                      'solução exacta do sistema linear.'
+                      'solução exata do sistema linear.'
 
         self.pop_upSobre = Toplevel()
         self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=72, font=("Fixedsys", 12))
         self.labelSobre.pack(expand=True)
+
+    def ExemploInteressante(self):
+        textoExemplo = '  Um exemplo interessante é                                 \n' \
+                       'A = [[4.0, -2.0, 1.0], [1.0, -3.0, 2.0], [-1.0, 2.0, 6.0]]  \n' \
+                       'chute inical [1,1,1] e solução [1.0,2.0,3.0]'
+
+        self.pop_upExemplo = Toplevel()
+        self.labelExemplo = Label(self.pop_upExemplo, text=textoExemplo, height=12, width=74, font=("Fixedsys", 12))
+        self.labelExemplo.pack(expand=True)
 
     def MetodoGaussSeidel(self):
         if (self.matrizA.get() == '' or self.vetorSolucao.get() == ''
             or self.chuteInicial.get() == '' or self.numeroInteracoes.get() == 0):
             self.labelResultado.config(text='Resultado Final ')
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelTempoExecucao.config(text='Tempo de Execução: ')
 
         else:
+            inicio = time()
             self.labelErrosInput.config(text="")
             matrizA = np.array(eval(self.matrizA.get()))
             matrizL = np.tril(matrizA)
@@ -119,6 +137,7 @@ class MenuMetodoGaussSeidel:
                     self.labelResultado.config(text='Resultado Final ')
                     self.labelErrosInput.config(text="A matriz e vetores não possuem a mesma dimensão")
             self.labelResultado.config(text='Resultado Final '+ str(chuteInicial))
+            self.labelTempoExecucao.config(text='Tempo de Execução: '+str(time() - inicio))
 
 principal = Tk()
 menu = MenuMetodoGaussSeidel(principal)

@@ -61,12 +61,7 @@ class menuTrabalhoCG:
         self.executaGradienteDescendente.grid(row=7, column=1)
 
     def Ajuda(self):
-        texto_ajuda = 'Os métodos disponíveis são:                              \n' \
-                      ' - Método de Newton                                       \n'\
-                      ' - Método da Bisseção                                     \n'\
-                      ' - Método do Ponto Fixo                                   \n' \
-                      ' - Método de Gauss-Seidel                                  \n' \
-                      ' - Método de Gauss-Jacobi                                   \n' \
+        texto_ajuda = '' \
 
         self.pop_up = Toplevel()
         self.label = Label(self.pop_up, text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
@@ -92,6 +87,7 @@ class menuTrabalhoCG:
 
     def MetodoGradienteDescendente(self):
         os.system('python3 Metodos/MetodoGradienteDescendente.py')
+
 principal = Tk()
 menu = menuTrabalhoCG(principal)
 principal.mainloop()

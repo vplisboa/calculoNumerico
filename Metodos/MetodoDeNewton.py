@@ -1,6 +1,6 @@
 from tkinter import *
 from sympy import *
-
+from time import *
 #caso de teste 9-x*(x-10)
 
 class MenuMetodoDeNewton:
@@ -52,17 +52,21 @@ class MenuMetodoDeNewton:
         self.campoErroDesejado = Entry(master, textvar=self.erroDesejado)
         self.campoErroDesejado.grid(row=6, column=1)
 
+        # Campo que mostra o resultado final
+        self.labelResultado = Label(master, text="Resposta Final: ", font=("Fixedsys", 12))
+        self.labelResultado.grid(row=10, column=1)
+
         #Campo que mostra os passos até a resposta ser encontrada
         self.labelPassos = Label(master,text="Quantidade de Passos: ",font=("Fixedsys", 12))
-        self.labelPassos.grid(row=10, column=1)
+        self.labelPassos.grid(row=11, column=1)
 
-        #Campo que mostra o resultado final
-        self.labelResultado = Label(master,text="Resposta Final: ",font=("Fixedsys", 12))
-        self.labelResultado.grid(row=11, column=1)
+        #Campo que mostra o tempo de execução do programa
+        self.labelTempoExecucao = Label(master,text="Tempo de Execução: ",font=("Fixedsys", 12))
+        self.labelTempoExecucao.grid(row=12, column=1)
 
         # Campo que mostra erros para o usuário
         self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
-        self.labelErrosInput.grid(row=12, column=1)
+        self.labelErrosInput.grid(row=13, column=1)
 
         #executa o método de newton
         self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoDeNewton)
@@ -110,8 +114,10 @@ class MenuMetodoDeNewton:
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
             self.labelResultado.config(text='Resultado Final: ')
             self.labelPassos.config(text='Quantidade de Passos: ')
+            self.labelTempoExecucao.config(text='Tempo de Execução: ')
 
         else:
+            inicio = time()
             self.labelErrosInput.config(text="")
             valorAnterior = eval(self.chuteInicial.get())
             proximoValor = valorAnterior - self.f(valorAnterior)/self.fDerivada(valorAnterior);
@@ -127,6 +133,7 @@ class MenuMetodoDeNewton:
 
             self.labelResultado.config(text = 'Resultado Final: '+str(proximoValor))
             self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
+            self.labelTempoExecucao.config(text='Tempo de Execução: '+str(time() - inicio))
 
     def f(self,valor):
         x = valor

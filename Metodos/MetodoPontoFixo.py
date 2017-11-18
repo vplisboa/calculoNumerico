@@ -1,6 +1,5 @@
 from tkinter import *
-
-#caso de teste
+from time import *
 
 class MenuMetodoPontoFixo:
     def __init__(self, master):
@@ -69,12 +68,16 @@ class MenuMetodoPontoFixo:
 
         # Campo que mostra erros para o usuário
         self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
-        self.labelErrosInput.grid(row=12, column=1)
+        self.labelErrosInput.grid(row=13, column=1)
 
         #executa o método da bisseção
         self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoPontoFixo)
         self.botaoExecutar.config(height=2, width=10)
         self.botaoExecutar.grid(row=13, column=2)
+
+        # Campo que mostra o tempo de execução do programa
+        self.labelTempoExecucao = Label(master, text="Tempo de Execução: ", font=("Fixedsys", 12))
+        self.labelTempoExecucao.grid(row=12, column=1)
 
     def Ajuda(self):
         texto_ajuda = 'Para inserir a equação utilize os seguintes operadores     \n'\
@@ -104,8 +107,10 @@ class MenuMetodoPontoFixo:
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
             self.labelResultado.config(text='Resultado Final: ')
             self.labelPassos.config(text='Quantidade de Passos: ')
+            self.labelTempoExecucao.config(text='Tempo de Execução: ')
 
         else:
+            inicio = time()
             self.labelErrosInput.config(text="")
             valorInicial = eval(self.valorInicial.get())
 
@@ -125,6 +130,7 @@ class MenuMetodoPontoFixo:
             self.labelResultado.config(text = 'Resultado Final: '+str(resultado))
             self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
             #self.labelErroFinal.config(text='Erro Final: '+str(erro))
+            self.labelTempoExecucao.config(text='Tempo de Execução: '+str(time() - inicio))
 
     def f(self,valor):
         x = valor
