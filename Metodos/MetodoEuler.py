@@ -1,15 +1,17 @@
+from decimal import Decimal
 from tkinter import *
 from sympy import *
 from time import *
-#caso de teste 9-x*(x-10)
 
-class MenuMetodoDeNewton:
+#caso de teste
+
+class MenuMetodoEuler:
     def __init__(self, master):
         self.master = master
         master.title("Método de Newton")
 
         #altera o tamanho do menu
-        master.geometry("800x360")
+        master.geometry("800x450")
 
         self.label = Label(master, text="Insira os parâmetros:", font=("Fixedsys",16))
         self.label.grid(row=0, column=1)
@@ -28,9 +30,6 @@ class MenuMetodoDeNewton:
         self.principal.add_command(label="Ajuda", command=self.Ajuda)
         self.principal.add_command(label="Sobre", command=self.Sobre)
 
-        #Cria menu no topo da janela com a label Exemplo Interessante
-        self.principal.add_command(label="Exemplo", command=self.ExemploInteressante)
-
         #espaço para inserir a equação
         self.labelEquacao = Label(master, text="Insira a equação:", font=("Fixedsys", 12))
         self.labelEquacao.grid(row=1, column=1)
@@ -38,43 +37,54 @@ class MenuMetodoDeNewton:
         self.campoEquacaoInicial = Entry(master, textvar=self.equacaoInicial)
         self.campoEquacaoInicial.grid(row=2, column=1)
 
-        #chute inicial
-        self.labelChuteInicial = Label(master, text="Insira o chute inicial", font=("Fixedsys", 12))
-        self.labelChuteInicial.grid(row=3, column=1)
-        self.chuteInicial = StringVar()
-        self.campoChuteInicial = Entry(master, textvar = self.chuteInicial)
-        self.campoChuteInicial.grid(row=4, column=1)
+        #valor inical de x
+        self.labelPrimeiroX = Label(master, text="Insira o valor de x inicial", font=("Fixedsys", 12))
+        self.labelPrimeiroX.grid(row=3, column=1)
+        self.primeiroX = StringVar()
+        self.campoPrimeiroX = Entry(master, textvar = self.primeiroX)
+        self.campoPrimeiroX.grid(row=4, column=1)
 
-        #Insira o numero de casas decimais de erro
-        self.labelErro = Label(master, text="Insira o número de casas decimais do erro", font=("Fixedsys", 12))
-        self.labelErro.grid(row=5, column=1)
-        self.erroDesejado = IntVar()
-        self.campoErroDesejado = Entry(master, textvar=self.erroDesejado)
-        self.campoErroDesejado.grid(row=6, column=1)
+        #Segundo valor de x
+        self.labelSegundoValorX = Label(master, text="Insira o x a ser calculado", font=("Fixedsys", 12))
+        self.labelSegundoValorX.grid(row=5, column=1)
+        self.segundoX = StringVar()
+        self.campoSegundoX = Entry(master, textvar=self.segundoX)
+        self.campoSegundoX.grid(row=6, column=1)
+
+        # valor inical de y
+        self.labelPrimeiroY = Label(master, text="Insira o valor de y inicial", font=("Fixedsys", 12))
+        self.labelPrimeiroY.grid(row=7, column=1)
+        self.primeiroY = StringVar()
+        self.campoPrimeiroY = Entry(master, textvar=self.primeiroY)
+        self.campoPrimeiroY.grid(row=8, column=1)
+
+        # valor de h
+        self.labelValorH = Label(master, text="Insira o valor de h", font=("Fixedsys", 12))
+        self.labelValorH.grid(row=9, column=1)
+        self.valorH = StringVar()
+        self.campoValorH = Entry(master, textvar=self.valorH)
+        self.campoValorH.grid(row=10, column=1)
 
         # Campo que mostra o resultado final
-        self.labelResultado = Label(master, text="Resposta Final: ", font=("Fixedsys", 12))
-        self.labelResultado.grid(row=10, column=1)
+        self.labelResultado = Label(master, text="Resultado Final: ", font=("Fixedsys", 12))
+        self.labelResultado.grid(row=11, column=1)
 
         #Campo que mostra os passos até a resposta ser encontrada
         self.labelPassos = Label(master,text="Quantidade de Passos: ",font=("Fixedsys", 12))
-        self.labelPassos.grid(row=11, column=1)
+        self.labelPassos.grid(row=12, column=1)
 
         #Campo que mostra o tempo de execução do programa
         self.labelTempoExecucao = Label(master,text="Tempo de Execução: ",font=("Fixedsys", 12))
-        self.labelTempoExecucao.grid(row=12, column=1)
+        self.labelTempoExecucao.grid(row=13, column=1)
 
         # Campo que mostra erros para o usuário
         self.labelErrosInput = Label(master, text="", font=("Fixedsys", 12))
-        self.labelErrosInput.grid(row=13, column=1)
+        self.labelErrosInput.grid(row=14, column=1)
 
-        #executa o método de newton
-        self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoDeNewton)
+        #executa o método de euler
+        self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoEuler)
         self.botaoExecutar.config(height=2, width=10)
-        self.botaoExecutar.grid(row=13, column=2)
-
-        self.observacao = Label(master, text="A derivada é calcula em função de x", fg="red",font=("Fixedsys", 12))
-        self.observacao.grid(row=0, column=2)
+        self.botaoExecutar.grid(row=14, column=2)
 
     def Ajuda(self):
         texto_ajuda = 'Para inserir a equação utilize os seguintes operadores     \n'\
@@ -96,21 +106,9 @@ class MenuMetodoDeNewton:
         self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=60, font=("Fixedsys", 12))
         self.labelSobre.pack(expand=True)
 
-    def ExemploInteressante(self):
-        textoExemplo = 'Um exemplo interessante é a função 9-x*(x-10) com valor inicial 10. \n' \
-                       'O interessante desse exemplo é que utilizando erro 4 e erro 8, o    \n' \
-                       '   valor obtido é o mesmo, porém em passos diferentes isso ocorre   \n' \
-                       '   devido à incerteza que existe em se trabalhar com variáveis do   \n' \
-                       '   tipo float.'
-
-        self.pop_upExemplo = Toplevel()
-        self.labelExemplo = Label(self.pop_upExemplo, text=textoExemplo, height=12, width=74, font=("Fixedsys", 12))
-        self.labelExemplo.pack(expand=True)
-
-    def MetodoDeNewton(self):
-
-        if(self.chuteInicial.get() == '' or self.erroDesejado.get() == 0
-           or self.equacaoInicial.get() == ''):
+    def MetodoEuler(self):
+        if(self.valorH.get() == '' or self.segundoX.get() == '' or self.primeiroY.get() == ''
+           or self.primeiroX.get()   == '' or self.equacaoInicial.get() == ''):
             self.labelErrosInput.config(text="Todos os campos são obrigatórios")
             self.labelResultado.config(text='Resultado Final: ')
             self.labelPassos.config(text='Quantidade de Passos: ')
@@ -119,33 +117,31 @@ class MenuMetodoDeNewton:
         else:
             inicio = time()
             self.labelErrosInput.config(text="")
-            valorAnterior = eval(self.chuteInicial.get())
-            proximoValor = valorAnterior - self.f(valorAnterior)/self.fDerivada(valorAnterior);
 
-            a= self.erroDesejado.get()
-            b = '%.'+ str(a) +'f'
+            segundoValorX = Decimal(self.segundoX.get())
+            xInicial = Decimal(self.primeiroX.get())
+            yInicial = Decimal(self.primeiroY.get())
+            h = Decimal(self.valorH.get())
             passos = 0
+            x = xInicial
+            y = yInicial
+            quantidadePassos = int((segundoValorX - xInicial) / h)
 
-            while(b % proximoValor != b % valorAnterior):
-                valorAnterior = proximoValor
-                proximoValor = valorAnterior - self.f(valorAnterior) / self.fDerivada(valorAnterior);
+            for i in range(quantidadePassos):
+                x += h * self.f(x,y)
+                y += h
                 passos += 1
 
-            self.labelResultado.config(text = 'Resultado Final: '+str(proximoValor))
-            self.labelPassos.config(text='Quantidade de Passos: '+ str(passos))
-            self.labelTempoExecucao.config(text='Tempo de Execução: '+str(time() - inicio))
+            self.labelResultado.config(text='Resultado Final: ' + str(y))
+            self.labelPassos.config(text='Quantidade de Passos: ' + str(passos))
+            self.labelTempoExecucao.config(text='Tempo de Execução: ' + str(time() - inicio))
 
-    def f(self,valor):
-        x = valor
+    def f(self, valorX,valorY):
+        x = valorX
+        y = valorY
         equacao = eval('\'' + self.equacaoInicial.get() + '\'')
         return eval(equacao)
 
-    def fDerivada(self,valor):
-        equacao = eval('\'' + self.equacaoInicial.get() + '\'')
-        x = valor
-        derivada = str(diff(equacao, 'x'))
-        return eval(derivada)
-
 principal = Tk()
-menu = MenuMetodoDeNewton(principal)
+menu = MenuMetodoEuler(principal)
 principal.mainloop()
