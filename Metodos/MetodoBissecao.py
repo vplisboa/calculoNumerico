@@ -1,6 +1,7 @@
 from tkinter import *
 from decimal import *
 from time import *
+
 #caso de teste x**2 - 7, -1:3 , 0.0001
 
 class MenuMetodoBissecao:
@@ -87,6 +88,7 @@ class MenuMetodoBissecao:
                       '  - \'+\' : Adição                                         \n' \
                       '  - \'-\' : Subtração                                      \n' \
                       '  - \'/\' : Divisão                                         \n' \
+                      '  - tolerância deve ser utilizada na forma decimal           ' \
 
         self.pop_up = Toplevel()
         self.label = Label(self.pop_up, text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
@@ -116,7 +118,7 @@ class MenuMetodoBissecao:
 
         if(self.inicioIntervalo.get() == '' or self.fimIntervalo.get() == ''
            or self.tolerancia.get() == '' or self.equacaoInicial.get() == ''):
-            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios",fg="red")
             self.labelResultado.config(text='Resultado Final: ')
             self.labelPassos.config(text='Quantidade de Passos: ')
             self.labelTempoExecucao.config(text='Tempo de Execução: ')

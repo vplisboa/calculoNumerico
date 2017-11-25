@@ -9,8 +9,13 @@ Para rodar o programa é necessário ter instalado:
  - Sympy 1.0
  - TKinter 8.6
  - numpy 1.11.2
+ - decimal 1.70
 
 Para executar o programa basta rodar o seguinte comando:
 ``` sh
     $ python3 MenuPrincipal.py
 ```
+
+##TODO
+ - Plotar os gráficos
+ - Aplicativo para android

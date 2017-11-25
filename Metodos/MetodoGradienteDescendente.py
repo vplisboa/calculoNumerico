@@ -91,6 +91,7 @@ class MenuMetodoGradienteDescendente:
                       '  - \'+\' : Adição                                         \n' \
                       '  - \'-\' : Subtração                                      \n' \
                       '  - \'/\' : Divisão                                         \n' \
+                      '  - h e precisão devem ser utilizados na forma decimal      ' \
 
         self.pop_up = Toplevel()
         self.label = Label(self.pop_up, text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
@@ -118,7 +119,7 @@ class MenuMetodoGradienteDescendente:
 
         if(self.valorInicial.get() == '' or self.multiplicadorPassos.get() == ''
            or self.precisao.get() == '' or self.equacaoInicial.get() == ''):
-            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios",fg="red")
             self.labelResultado.config(text='Resultado Final: ')
             self.labelPassos.config(text='Quantidade de Passos: ')
             self.labelTempoExecucao.config(text='Tempo de Execução: ')

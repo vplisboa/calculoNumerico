@@ -3,15 +3,13 @@ from tkinter import *
 from sympy import *
 from time import *
 
-#caso de teste
-
 class MenuMetodoEuler:
     def __init__(self, master):
         self.master = master
         master.title("Método de Euler")
 
         #altera o tamanho do menu
-        master.geometry("800x450")
+        master.geometry("720x450")
 
         self.label = Label(master, text="Insira os parâmetros:", font=("Fixedsys",16))
         self.label.grid(row=0, column=1)
@@ -45,7 +43,7 @@ class MenuMetodoEuler:
         self.campoPrimeiroX.grid(row=4, column=1)
 
         #Segundo valor de x
-        self.labelSegundoValorX = Label(master, text="Insira o x a ser calculado", font=("Fixedsys", 12))
+        self.labelSegundoValorX = Label(master, text="Insira o x para o y desejado", font=("Fixedsys", 12))
         self.labelSegundoValorX.grid(row=5, column=1)
         self.segundoX = StringVar()
         self.campoSegundoX = Entry(master, textvar=self.segundoX)
@@ -59,7 +57,7 @@ class MenuMetodoEuler:
         self.campoPrimeiroY.grid(row=8, column=1)
 
         # valor de h
-        self.labelValorH = Label(master, text="Insira o valor de h", font=("Fixedsys", 12))
+        self.labelValorH = Label(master, text="Insira o valor de h(exemplo 0.01)", font=("Fixedsys", 12))
         self.labelValorH.grid(row=9, column=1)
         self.valorH = StringVar()
         self.campoValorH = Entry(master, textvar=self.valorH)
@@ -93,14 +91,17 @@ class MenuMetodoEuler:
                       '  - \'+\' : Adição                                         \n' \
                       '  - \'-\' : Subtração                                      \n' \
                       '  - \'/\' : Divisão                                         \n' \
+                      '  - o h deve ser passado na forma decimal(0.0(...)1)        ' \
 
         self.pop_up = Toplevel()
         self.label = Label(self.pop_up,text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))
         self.label.pack(expand=True)
 
     def Sobre(self):
-        texto_sobre = '  Tem o objetivo de estimar as raízes de uma função.       \n' \
-                      'Para isso, escolhe-se uma aproximação inicial para esta.'
+        texto_sobre = ' É um método numérico de primeira ordem para solucionar \n' \
+                      'equações diferenciais ordinárias com um valor inicial dado.\n' \
+                      'É o tipo mais básico de método explícito para integração\n' \
+                      'numérica para equações diferenciais ordinárias.'
 
         self.pop_upSobre = Toplevel()
         self.labelSobre = Label(self.pop_upSobre, text=texto_sobre, height=12, width=60, font=("Fixedsys", 12))
@@ -109,7 +110,7 @@ class MenuMetodoEuler:
     def MetodoEuler(self):
         if(self.valorH.get() == '' or self.segundoX.get() == '' or self.primeiroY.get() == ''
            or self.primeiroX.get()   == '' or self.equacaoInicial.get() == ''):
-            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios", fg = "red")
             self.labelResultado.config(text='Resultado Final: ')
             self.labelPassos.config(text='Quantidade de Passos: ')
             self.labelTempoExecucao.config(text='Tempo de Execução: ')

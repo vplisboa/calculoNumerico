@@ -1,12 +1,13 @@
 from tkinter import *
 import os
+
 class menuTrabalhoCG:
     def __init__(self, master):
         self.master = master
         master.title("Trabalho de Cálculo Numérico 2017.2")
 
         #altera o tamanho do menu
-        master.geometry("512x512")
+        master.geometry("550x550")
 
         self.label = Label(master, text="Selecione o método numérico", font=("Fixedsys",16))
         self.label.grid(row=0, column=1)
@@ -67,7 +68,11 @@ class menuTrabalhoCG:
         self.executaEuler.grid(row=8, column=1)
 
     def Ajuda(self):
-        texto_ajuda = '' \
+        texto_ajuda = 'Trabalho da disciplina de Cálculo Numérico\n' \
+                      'Author: Victor Pedro Rodrigues Lisboa\n' \
+                      'Objetivo: criar um programa que permitisse a execução\n' \
+                      '          de diversos métodos numéricos e mostrasse os\n' \
+                      '          resultados obtidos' \
 
         self.pop_up = Toplevel()
         self.label = Label(self.pop_up, text = texto_ajuda, height=12, width=60,font=("Fixedsys",12))

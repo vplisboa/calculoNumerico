@@ -116,7 +116,7 @@ class MenuMetodoGaussSeidel:
         if (self.matrizA.get() == '' or self.vetorSolucao.get() == ''
             or self.chuteInicial.get() == '' or self.numeroInteracoes.get() == 0):
             self.labelResultado.config(text='Resultado Final ')
-            self.labelErrosInput.config(text="Todos os campos são obrigatórios")
+            self.labelErrosInput.config(text="Todos os campos são obrigatórios",fg="red")
             self.labelTempoExecucao.config(text='Tempo de Execução: ')
 
         else:
