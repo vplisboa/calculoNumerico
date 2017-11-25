@@ -23,7 +23,7 @@ class menuTrabalhoCG:
         #cria menu no topo da janela, com a label Ajuda
         self.principal = Menu(master)
         self.master.config(menu=self.principal)
-        self.principal.add_command(label="Ajuda", command=self.Ajuda)
+        self.principal.add_command(label="Sobre", command=self.Sobre)
 
         #botao que seleciona o método de newton
         self.executaMetodoDeNewton = Button(master, text="Método de Newton", command=self.MetodoDeNewton)
@@ -67,9 +67,9 @@ class menuTrabalhoCG:
         self.executaEuler.config(height=3, width=27)
         self.executaEuler.grid(row=8, column=1)
 
-    def Ajuda(self):
-        texto_ajuda = 'Trabalho da disciplina de Cálculo Numérico\n' \
-                      'Author: Victor Pedro Rodrigues Lisboa\n' \
+    def Sobre(self):
+        texto_ajuda = 'Trabalho da disciplina de Cálculo Numérico           \n' \
+                      'Author: Victor Pedro Rodrigues Lisboa                \n' \
                       'Objetivo: criar um programa que permitisse a execução\n' \
                       '          de diversos métodos numéricos e mostrasse os\n' \
                       '          resultados obtidos' \
