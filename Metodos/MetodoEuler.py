@@ -8,7 +8,7 @@ from time import *
 class MenuMetodoEuler:
     def __init__(self, master):
         self.master = master
-        master.title("Método de Newton")
+        master.title("Método de Euler")
 
         #altera o tamanho do menu
         master.geometry("800x450")
@@ -22,7 +22,7 @@ class MenuMetodoEuler:
         #botao que fecha o menu
         self.close_button = Button(master, text="Fechar", command=master.quit)
         self.close_button.config(width = 6)
-        self.close_button.grid(row=14, column=2)
+        self.close_button.grid(row=15, column=3)
 
         #cria menu no topo da janela, com a label Ajuda
         self.principal = Menu(master)
@@ -84,7 +84,7 @@ class MenuMetodoEuler:
         #executa o método de euler
         self.botaoExecutar = Button(master, text="Calcular", command=self.MetodoEuler)
         self.botaoExecutar.config(height=2, width=10)
-        self.botaoExecutar.grid(row=14, column=2)
+        self.botaoExecutar.grid(row=15, column=2)
 
     def Ajuda(self):
         texto_ajuda = 'Para inserir a equação utilize os seguintes operadores     \n'\

@@ -60,6 +60,12 @@ class menuTrabalhoCG:
         self.executaGradienteDescendente.config(height=3, width=27)
         self.executaGradienteDescendente.grid(row=7, column=1)
 
+        # botão que seleciona o método de Euler
+        self.executaEuler = Button(master, text="Método de Euler",
+                                                  command=self.MetodoEuler)
+        self.executaEuler.config(height=3, width=27)
+        self.executaEuler.grid(row=8, column=1)
+
     def Ajuda(self):
         texto_ajuda = '' \
 
@@ -87,6 +93,9 @@ class menuTrabalhoCG:
 
     def MetodoGradienteDescendente(self):
         os.system('python3 Metodos/MetodoGradienteDescendente.py')
+
+    def MetodoEuler(self):
+        os.system('python3 Metodos/MetodoEuler.py')
 
 principal = Tk()
 menu = menuTrabalhoCG(principal)
