@@ -16,6 +16,6 @@ Para executar o programa basta rodar o seguinte comando:
     $ python3 MenuPrincipal.py
 ```
 
-##TODO
+# TODO
  - Plotar os gráficos
  - Aplicativo para android
